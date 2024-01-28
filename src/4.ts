@@ -12,47 +12,44 @@
 
 // Наприклад, ось так:
 
-
 class Key {
-    private signature: number;
+  private signature: number;
 
-    constructor() {
-      this.signature = Math.random();
-    }
-  
-    getSignature(): number {
-      return this.signature;
-    }
+  constructor() {
+    this.signature = Math.random();
   }
 
-  class Person {
-    private key: Key;
-  
-    constructor(key: Key) {
-      this.key = key;
-    }
-  
-    getKey(): Key {
-      return this.key;
-    }
+  getSignature(): number {
+    return this.signature;
+  }
+}
+
+class Person {
+  private key: Key;
+
+  constructor(key: Key) {
+    this.key = key;
   }
 
-  abstract class House {
-    protected door: boolean = false;
-    protected key: Key;
-    protected tenants: Person[] = [];
-  
-    comeIn(person: Person): void {
-      if (person.getKey().getSignature() === this.key.getSignature()) {
-        this.door = true;
-      }
-    }
+  getKey(): Key {
+    return this.key;
   }
+}
 
+abstract class House {
+  protected door: boolean = false;
+  protected key: Key;
+  protected tenants: Person[] = [];
+
+  comeIn(person: Person): void {
+    if (this.door) this.tenants.push(person);
+  }
+}
 
 class MyHouse extends House {
   constructor(myHouseKey: Key) {
-    super(myHouseKey);
+    super();
+    this.key = myHouseKey;
   }
 
   openDoor(key: Key): void {
@@ -61,7 +58,6 @@ class MyHouse extends House {
     }
   }
 }
-
 
 const key = new Key();
 
